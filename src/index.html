@@ -6,8 +6,54 @@
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <script src="webcomponents/webcomponents-loader.js"></script>
+  <script>
+    if (!window.customElements){document.write('<!--');}
+  </script>
+  <script src="webcomponents/custom-elements-es5-adapter.js"></script>
+  <!-- ! DO NOT REMOVE THIS COMMENT, WE NEED ITS CLOSING MARKER -->
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+
+      // Example 1 - listening click event
+      const customButton = document.querySelector("app-button");
+      customButton.addEventListener("onClickEvent",()=>{
+        const clickLog = document.querySelector("#click-log");
+        clickLog.innerHTML += "clicked<br>";
+      });
+
+      // Example 2 - listening change Event
+      const customInput = document.querySelector("app-input");
+      customInput.addEventListener("onChangeEvent",(value)=>{
+        const clickLog = document.querySelector("#change-log");
+        clickLog.innerHTML += `${value.detail}<br>`;
+      });
+
+      // Example 3 - Parsing json and Changing attribute dynamically
+      const contentBox = document.querySelector("app-content-box");
+      const contentList = [];
+      setInterval(()=>{
+        const newContent = {"title":'foo'+(contentList.length+1),"content":"baz", "visible":true};
+        contentList.push(newContent);
+        contentBox.setAttribute('content-list',JSON.stringify(contentList));
+      },1000)
+
+    });
+    
+  </script>
 </head>
 <body>
   <app-root></app-root>
+  <div id="container">
+    <app-button>webcomponents</app-button>
+    <div id="click-log"></div>
+  </div>
+  <div id="container">
+    <app-input label="Some Label"></app-input>
+    <div id="change-log"></div>
+  </div>
+  <div id="container">
+    <app-content-box content-list='[{"title":"foo","content":"bar", "visible":false},{"title":"foo","content":"bar2", "visible":true}]'></app-content-box>
+  </div>
 </body>
 </html>

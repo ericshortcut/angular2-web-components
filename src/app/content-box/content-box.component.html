@@ -1,0 +1,5 @@
+<ul>
+    <ng-template ngFor let-box [ngForOf]="contentList">
+        <li *ngIf="box.visible">{{box.title}} | {{box.content}} </li>
+    </ng-template>
+</ul>
